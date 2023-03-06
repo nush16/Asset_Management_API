@@ -6,8 +6,9 @@ class Department(db.Model):
     # Set the primary key
     id = db.Column(db.Integer,primary_key=True)
     # the rest of the attributes/columns
-    building_number = db.Column(db.String())
-    room_number = db.Column(db.String())
-    address = db.Column(db.String())
+    building_number = db.Column(db.String(50), nullable=False,)
+    room_number = db.Column(db.String(50), nullable=False,)
+    address = db.Column(db.String(50), nullable=False,)
     # Foreign key to link to employees (refer to primary key of the employee)
-    employees = db.relationship("Employee", backref = "departments")
+    employees = db.relationship("Employee", backref = "department")
+    
