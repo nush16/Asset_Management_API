@@ -8,5 +8,5 @@ class Asset(db.Model):
     # the rest of the attributes/columns
     description  = db.Column(db.String()) 
     # link to employees 
-    employee_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
+    employee_id = db.Column(db.Integer, db.ForeignKey("employees.id"))
     asset_manufacturer_id = db.Column(db.String())
