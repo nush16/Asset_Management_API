@@ -4,7 +4,7 @@ from models.departments import Department
 from schemas.department_schema import department_schema, departments_schema
 from datetime import date
 
-departments = Blueprint('departments', __name__)
+departments = Blueprint('departments', __name__ , url_prefix="/departments")
 
 # The GET routes endpoint
 @departments.route("/", methods=["GET"])
@@ -12,9 +12,10 @@ def get_departments():
     # get all the departments from the database table
     departments_list = Department.query.all()
     # # Convert the departments from the database into a JSON format and store them in result
-    # result = departments_schema.dump(departments_list)
+    result = departments_schema.dump(departments_list)
     # return the data in JSON format
     # return jsonify(result)
+    return jsonify(result)
     return "List of departments retrieved"
 
 # The POST route endpoint

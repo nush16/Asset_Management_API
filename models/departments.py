@@ -10,4 +10,4 @@ class Department(db.Model):
     room_number = db.Column(db.Integer(), nullable = False,)
     address = db.Column(db.String(50), nullable = False,)
     # Foreign key to link to employees (refer to primary key of the employee)
-    # employees = db.relationship("Employee", backref ="department", cascade="all, delete")
+    employees = db.relationship("Employee", backref ="department", cascade="all, delete")

@@ -3,7 +3,6 @@ from flask import Blueprint
 from main import bcrypt
 from models.departments import Department
 from models.employees import Employee
-# from models.users import User
 from datetime import date
 
 db_commands = Blueprint("db", __name__)
@@ -18,17 +17,6 @@ def create_db():
 @db_commands .cli.command("seed")
 def seed_db():
     # create the employee object
-    # employee1 = Employee(
-    #     # set the attributes, not the id, SQLAlchemy will manage that for us
-    #     first_name = "Start the project",
-    #     last_name = "Stage 1, creating the database",
-    #     email_address = "To Do",
-    #     contact_number = "9999",
-    #     position = "manager",
-    #     # date = date.today()
-    # )
-    # # Add the object as a new row to the table
-    # db.session.add(employee1)
 
     department1 = Department(
         # set the attributes, not the id, SQLAlchemy will manage that for us
@@ -37,9 +25,24 @@ def seed_db():
         address = "Ongoing",
         # date = date.today()
     )
+    
     # Add the object as a new row to the table
     db.session.add(department1)
+     # This extra commit will end the transaction and generate the ids for the user
+    db.session.commit()
 
+    employee1 = Employee(
+        # set the attributes, not the id, SQLAlchemy will manage that for us
+        first_name = "Start the project",
+        last_name = "creating the database",
+        email_address = "To Do",
+        contact_number = "9999",
+        position = "manager",
+        department_id = department1.id
+        # date = date.today()
+    )
+    # Add the object as a new row to the table
+    db.session.add(employee1)
 
     # admin_user = User(
     #     email = "admin@email.com",
