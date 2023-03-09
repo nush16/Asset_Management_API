@@ -9,7 +9,7 @@ class AssetSchema(ma.Schema):
         fields = ("id","description", "employee_id","asset_manufacturer_id")
     employee_id = fields.Nested(EmployeeSchema, only = ("id",))
 
-# single employee schema
+# single asset schema
 asset_schema = AssetSchema()
-# multiple employee schema
+# multiple asset schema
 assets_schema = AssetSchema(many=True)

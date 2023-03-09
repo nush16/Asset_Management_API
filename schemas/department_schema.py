@@ -6,7 +6,7 @@ class DepartmentSchema(ma.Schema):
         # fields to expose
         fields = ("id", "building_number", "room_number", "address") 
 
-# single employee schema
+# single department schema
 department_schema = DepartmentSchema()
-# multiple employee schema
+# multiple departments schema
 departments_schema = DepartmentSchema(many=True)
