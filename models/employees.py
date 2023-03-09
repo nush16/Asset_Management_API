@@ -14,4 +14,4 @@ class Employee(db.Model):
     # There can be many employees in a department - foreign key to link to departments
     department_id = db.Column(db.Integer, db.ForeignKey("departments.id"), nullable =False)
     # an employee can have many assets - foreign key to link to assets
-    # assets = db.relationship("Asset", backref = "employees", cascade="all, delete")
+    assets = db.relationship("Asset", backref = "employees", cascade="all, delete")

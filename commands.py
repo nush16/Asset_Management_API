@@ -3,6 +3,7 @@ from flask import Blueprint
 from main import bcrypt
 from models.departments import Department
 from models.employees import Employee
+from models.assets import Asset
 from datetime import date
 
 db_commands = Blueprint("db", __name__)
@@ -43,6 +44,17 @@ def seed_db():
     )
     # Add the object as a new row to the table
     db.session.add(employee1)
+    # This extra commit will end the transaction and generate the ids for the user
+    db.session.commit()
+
+    asset1 = Asset(
+        # set the attributes, not the id, SQLAlchemy will manage that for us
+        description = "HPLC",
+        employee_id = employee1.id,
+        asset_manufacturer_id = "dsfsdf"
+    )
+
+    db.session.add(asset1)
 
     # admin_user = User(
     #     email = "admin@email.com",
