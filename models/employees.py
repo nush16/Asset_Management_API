@@ -10,6 +10,7 @@ class Employee(db.Model):
     last_name = db.Column(db.String(50), nullable=False,)
     email_address = db.Column(db.String(100), nullable=False, unique=True)
     contact_number = db.Column(db.Integer(), nullable=False, unique=True)
+    room_number = db.Column(db.Integer(), nullable = False,)
     position = db.Column(db.String(100), nullable=False,)
     # There can be many employees in a department - foreign key to link to departments
     department_id = db.Column(db.Integer, db.ForeignKey("departments.id"), nullable =False)
