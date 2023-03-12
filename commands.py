@@ -5,7 +5,7 @@ from models.departments import Department
 from models.employees import Employee
 from models.assets import Asset
 from models.asset_type import AssetType
-# from models.manufacturer import Manufacturer
+from models.manufacturer import Manufacturer
 from datetime import date
 
 db_commands = Blueprint("db", __name__)
@@ -52,38 +52,39 @@ def seed_db():
     # This extra commit will end the transaction and generate the ids for the employee
     db.session.commit()
 
+    # create the asset object
     asset1 = Asset(
         # set the attributes
         serial_number = "a3546",
         date_purchased = "jghh",
-        # asset_type_id = department1.id,
         employee_id = employee1.id,
     )
 
     db.session.add(asset1)
     db.session.commit()
 
+    # create the asset object
     asset_type1 = AssetType(
         # set the attributes
         description = "akkkkk",
         asset_id = asset1.id,
-        # manufacturer_id = employee1.id,
     )
 
     db.session.add(asset_type1)
     db.session.commit()
-    # create the asset object
-# create the asset object
    
     # create the asset object
-    # manfacturer1 = Manufacturer(
-    #     # set the attributes
-    #     manufacturer_name = "Thermo",
-    #     manufacturer_contact_number = "11111",
-    #     manufacturer_email = "thermo@email.com",
-    #     manufacturer_address = "1 Tree Road, Sydney, NSW",
-    #     asset_id = asset1.id
-    # )
+    manfacturer1 = Manufacturer(
+        # set the attributes
+        manufacturer_name = "Thermo",
+        manufacturer_contact_number = "111",
+        manufacturer_email = "thermo@email.com",
+        manufacturer_address = "1 Tree Road, Sydney, NSW",
+        asset_type_id = asset_type1.id
+    )
+
+    db.session.add(manfacturer1)
+    db.session.commit()
 
     # manfacturer2 = Manufacturer(
     #     # set the attributes

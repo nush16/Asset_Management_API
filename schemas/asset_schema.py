@@ -6,7 +6,7 @@ class AssetSchema(ma.Schema):
     class Meta:
         ordered = True
         # fields to expose
-        fields = ("id","serial_number", "date_purchased", "employee_id", "asset_type_id")
+        fields = ("id","serial_number", "date_purchased", "employee_id")
     employee_id = fields.Nested(EmployeeSchema, only = ("id",))
 
 # single asset schema
