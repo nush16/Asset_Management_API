@@ -1,6 +1,7 @@
 from main import db
 from flask import Blueprint
 from main import bcrypt
+from models.admin import Admin
 from models.departments import Department
 from models.employees import Employee
 from models.assets import Asset
@@ -21,6 +22,15 @@ def create_db():
 # add the data to the tables
 @db_commands .cli.command("seed")
 def seed_db():
+
+    admin1 = Admin(
+        email = "admin@asset.com",
+        password = bcrypt.generate_password_hash("123456").decode("utf-8")
+    )
+
+    db.session.add(admin1)  
+    db.session.commit()
+
 
     # create the department object
     department1 = Department(

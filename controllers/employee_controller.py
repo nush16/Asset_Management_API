@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, abort
 from main import db
 from models.employees import Employee
 from schemas.employee_schema import employee_schema, employees_schema
@@ -13,6 +13,18 @@ def get_employees():
     employees_list = Employee.query.all()
     # Convert the employees from the database into a JSON format and store them in result
     result = employees_schema.dump(employees_list)
+    # return the data in JSON format
+    return jsonify(result)
+
+# The GET employee routes endpoint
+@employees.route("/<int:id>/", methods=["GET"])
+def get_card(id):
+    employee = Employee.query.filter_by(id=id).first()
+    #return an error if the card doesn't exist
+    if not employee:
+        return abort(400, description= "employee does not exist")
+    # Convert the cards from the database into a JSON format and store them in result
+    result = employee_schema.dump(employee)
     # return the data in JSON format
     return jsonify(result)
 
@@ -36,6 +48,11 @@ def create_employees():
     db.session.commit()
     #return the employee in the response
     return jsonify(employee_schema.dump(new_employee))
+
+# update employee details
+
+
+
 
 
 # Deelte an employee

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, abort
 from main import db
 from models.manufacturer import Manufacturer
 from schemas.manufacturer_schema import manufacturer_schema, manufacturers_schema
@@ -15,6 +15,20 @@ def get_manufacturers():
     result = manufacturers_schema.dump(manufacturers_list)
     # return the data in JSON format
     return jsonify(result)
+
+# The GET manufacturer routes endpoint
+@manufacturers.route("/<int:id>/", methods=["GET"])
+def get_card(id):
+    manufacturer = Manufacturer.query.filter_by(id=id).first()
+    #return an error if the card doesn't exist
+    if not manufacturer:
+        return abort(400, description= "employee does not exist")
+    # Convert the cards from the database into a JSON format and store them in result
+    result = manufacturer_schema.dump(manufacturer)
+    # return the data in JSON format
+    return jsonify(result)
+
+
 
 # add a manufacturer
 @manufacturers.route("/", methods=["POST"])

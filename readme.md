@@ -20,4 +20,4 @@
 - Get all assets in a department
 - Get assets a employee has
 - Get all manufacturers assets a department has
-- 
+  

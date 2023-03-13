@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, abort
 from main import db
 from models.assets import Asset
 from schemas.asset_schema import asset_schema, assets_schema
@@ -15,6 +15,19 @@ def get_asset():
     result = assets_schema.dump(assets_list)
     # return the data in JSON format
     return jsonify(result)
+
+# The GET asset routes endpoint
+@assets.route("/<int:id>/", methods=["GET"])
+def get_card(id):
+    asset = Asset.query.filter_by(id=id).first()
+    #return an error if the card doesn't exist
+    if not asset:
+        return abort(400, description= "asset does not exist")
+    # Convert the cards from the database into a JSON format and store them in result
+    result = asset_schema.dump(asset)
+    # return the data in JSON format
+    return jsonify(result)
+
 
 # add an asset
 @assets.route("/", methods=["POST"])

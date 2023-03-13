@@ -1,56 +1,52 @@
-from flask import Blueprint, jsonify, request, abort
+from flask import Blueprint, jsonify, request
 from main import db
-from models.employees import Employee
-from schemas.user_schema import user_schema, users_schema
-from datetime import timedelta
 from main import bcrypt
+from main import jwt
+from models.admin import Admin
+from schemas.admin_schema import admin_schema
+from datetime import timedelta
 from flask_jwt_extended import create_access_token
+from marshmallow.exceptions import ValidationError
 
 auth = Blueprint('auth', __name__, url_prefix="/auth")
 
-
+# register admin
 @auth.route("/register", methods=["POST"])
 def auth_register():
     #The request data will be loaded in a user_schema converted to JSON. request needs to be imported from
-    user_fields = user_schema.load(request.json)
-    # find the user
-    user = User.query.filter_by(email=user_fields["email"]).first()
-
-    if user:
-        # return an abort message to inform the user. That will end the request
-        return abort(400, description="Email already registered")
-    # Create the user object
-    user = User()
+    admin_fields = admin_schema.load(request.json)
+    #Create the user object
+    admin = Admin()
     #Add the email attribute
-    user.email = user_fields["email"]
+    admin.email = admin_fields["email"]
     #Add the password attribute hashed by bcrypt
-    user.password = bcrypt.generate_password_hash(user_fields["password"]).decode("utf-8")
-    #set the admin attribute to false
-    user.admin = False
+    admin.password = bcrypt.generate_password_hash(admin_fields["password"]).decode("utf-8")
     #Add it to the database and commit the changes
-    db.session.add(user)
+    db.session.add(admin)
     db.session.commit()
-    #create a variable that sets an expiry date
-    expiry = timedelta(days=1)
-    #create the access token
-    access_token = create_access_token(identity=str(user.id), expires_delta=expiry)
-    # return the user email and the access token
-    return jsonify({"user":user.email, "token": access_token })
+    #Return the user to check the request was successful
+    return jsonify(admin_schema.dump(admin))
 
 
-@auth.route("/login", methods=["POST"])
-def auth_login():
-    # get the user data from the request
-    user_fields = user_schema.load(request.json)
-    #find the user in the database by email
-    user = User.query.filter_by(email=user_fields["email"]).first()
-    # there is not a user with that email or if the password is no correct send an error
-    if not user or not bcrypt.check_password_hash(user.password, user_fields["password"]):
-        return abort(401, description="Incorrect username and password")
+#Login admin POST
+@auth.route("/login",methods = ["POST"])
+def login_admin():
+    # Get username and password fron the request
+    admin_fields = admin_schema.load(request.json)
+    # Check username and password. admin needs to exist, and password needs to match
+    admin = Admin.query.filter_by(email=admin_fields["email"]).first()
+    if not admin:
+        return {"error": "email is not valid"}
     
-    #create a variable that sets an expiry date
-    expiry = timedelta(days=1)
-    #create the access token
-    access_token = create_access_token(identity=str(user.id), expires_delta=expiry)
-    # return the user email and the access token
-    return jsonify({"user":user.email, "token": access_token })
+    if not bcrypt.check_password_hash(admin.password, admin_fields["password"]):
+        return {"error": "wrong password"}
+    # Credentials are valid, so generate token and return it to the user
+
+    token = create_access_token(identity="admin", expires_delta=timedelta(days=1)) 
+
+    return {"admin": admin.email, "token": token}
+
+# @auth.errorhandler(ValidationError)
+# def register_validation_error(error):
+#     #print(error.messages)
+#     return error.messages, 400
