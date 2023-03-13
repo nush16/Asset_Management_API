@@ -20,4 +20,17 @@
 - Get all assets in a department
 - Get assets a employee has
 - Get all manufacturers assets a department has
+
+## *admin privileges*
+
+- add, delete and update employees
+- add, delete and update manufacturers
+- add, delete and update departments
+- add, delete and update assets
   
+## *employees privileges*
+
+- view employees - maybe?
+- view manufacturers
+- view departments
+- view assets

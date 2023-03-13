@@ -36,7 +36,7 @@ def seed_db():
     department1 = Department(
         # set the attributes
         department_name = "A",
-        building_number = "1",
+        building_number = "6",
         address = "10 Glen drive, Melbourne, VIC",
     )
     # Add the object as a new row to the table
@@ -47,7 +47,7 @@ def seed_db():
     department2 = Department(
         # set the attributes
         department_name = "B",
-        building_number = "2",
+        building_number = "7",
         address = "11 Glen drive, Melbourne, VIC", 
     )
     # Add the object as a new row to the table
@@ -57,7 +57,7 @@ def seed_db():
     department3 = Department(
         # set the attributes
         department_name = "C",
-        building_number = "3",
+        building_number = "8",
         address = "12 Glen drive, Melbourne, VIC",
     )
     # Add the object as a new row to the table
@@ -145,7 +145,7 @@ def seed_db():
         # set the attributes
         serial_number = "a3546",
         date_purchased = "jghh",
-        employee_id = employee1.id,
+        employee_id = employee1.id
     )
     # Add the object as a new row to the table
     db.session.add(asset1)
@@ -155,7 +155,7 @@ def seed_db():
         # set the attributes
         serial_number = "r3547",
         date_purchased = "jghh",
-        employee_id = employee1.id,
+        employee_id = employee1.id
     )
     # Add the object as a new row to the table
     db.session.add(asset2)
