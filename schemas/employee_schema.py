@@ -6,8 +6,8 @@ class EmployeeSchema(ma.Schema):
     class Meta:
         ordered = True
         # fields to expose
-        fields = ("id", "first_name", "last_name", "email_address", "contact_number", "room_number", "position", "department_id", "department")
-    department = fields.Nested("DepartmentSchema")
+        fields = ("employee_id", "first_name", "last_name", "email_address", "contact_number", "room_number", "position", "department_id", "department")
+    # department = fields.Nested("DepartmentSchema")
 
 # single employee schema
 employee_schema = EmployeeSchema()

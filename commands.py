@@ -7,6 +7,7 @@ from models.employees import Employee
 from models.assets import Asset
 from models.asset_type import AssetType
 from models.manufacturer import Manufacturer
+from datetime import date
 
 
 db_commands = Blueprint("db", __name__)
@@ -75,7 +76,7 @@ def seed_db():
         contact_number = "432311",
         room_number = "15",
         position = "Manager",
-        department_id = department1.id
+        department_id = department1.department_id
     )
     # Add the object as a new row to the table
     db.session.add(employee1)
@@ -88,7 +89,7 @@ def seed_db():
         contact_number = "432312",
         room_number = "7",
         position = "Supervisor",
-        department_id = department3.id
+        department_id = department3.department_id
     
     )
     # Add the object as a new row to the table
@@ -103,7 +104,7 @@ def seed_db():
         contact_number = "432313",
         room_number = "6",
         position = "Scientist",
-        department_id = department3.id
+        department_id = department3.department_id
     
     )
     # Add the object as a new row to the table
@@ -117,7 +118,7 @@ def seed_db():
         contact_number = "432314",
         room_number = "5",
         position = "Manager",
-        department_id = department2.id
+        department_id = department2.department_id
     
     )
     # Add the object as a new row to the table
@@ -131,7 +132,7 @@ def seed_db():
         contact_number = "432315",
         room_number = "8",
         position = "Scientist",
-        department_id = department1.id
+        department_id = department1.department_id
     
     )
     # Add the object as a new row to the table
@@ -144,8 +145,8 @@ def seed_db():
     asset1 = Asset(
         # set the attributes
         serial_number = "a3546",
-        date_purchased = "jghh",
-        employee_id = employee1.id
+        date_purchased = date(day = 15, month = 3,year = 2009),
+        employee_id = employee1.employee_id
     )
     # Add the object as a new row to the table
     db.session.add(asset1)
@@ -154,8 +155,8 @@ def seed_db():
     asset2 = Asset(
         # set the attributes
         serial_number = "r3547",
-        date_purchased = "jghh",
-        employee_id = employee1.id
+        date_purchased = date(day = 8, month = 7,year = 2020),
+        employee_id = employee1.employee_id
     )
     # Add the object as a new row to the table
     db.session.add(asset2)
@@ -164,8 +165,8 @@ def seed_db():
     asset3 = Asset(
         # set the attributes
         serial_number = "a3548",
-        date_purchased = "jghh",
-        employee_id = employee2.id,
+        date_purchased = date(day = 9, month = 4,year = 2021),
+        employee_id = employee2.employee_id
     )
     # Add the object as a new row to the table
     db.session.add(asset3)
@@ -174,8 +175,8 @@ def seed_db():
     asset4 = Asset(
         # set the attributes
         serial_number = "e3558",
-        date_purchased = "jghh",
-        employee_id = employee2.id,
+        date_purchased = date(day = 20, month = 9,year = 2015),
+        employee_id = employee2.employee_id
     )
     # Add the object as a new row to the table
     db.session.add(asset4)
@@ -184,8 +185,8 @@ def seed_db():
     asset5 = Asset(
         # set the attributes
         serial_number = "w3559",
-        date_purchased = "jghh",
-        employee_id = employee3.id,
+        date_purchased = date(day = 7, month = 7,year = 2017),
+        employee_id = employee3.employee_id
     )
     # Add the object as a new row to the table
     db.session.add(asset5)
@@ -194,8 +195,8 @@ def seed_db():
     asset6 = Asset(
         # set the attributes
         serial_number = "z3579",
-        date_purchased = "jghh",
-        employee_id = employee3.id,
+        date_purchased = date(day = 8, month = 7,year = 2013),
+        employee_id = employee3.employee_id
     )
     # Add the object as a new row to the table
     db.session.add(asset6)
@@ -204,8 +205,8 @@ def seed_db():
     asset7 = Asset(
         # set the attributes
         serial_number = "b3479",
-        date_purchased = "jghh",
-        employee_id = employee4.id,
+        date_purchased = date(day = 15, month = 4,year = 2022),
+        employee_id = employee4.employee_id
     )
     # Add the object as a new row to the table
     db.session.add(asset7)
@@ -214,8 +215,8 @@ def seed_db():
     asset8 = Asset(
         # set the attributes
         serial_number = "y3499",
-        date_purchased = "jghh",
-        employee_id = employee4.id,
+        date_purchased = date(day = 9, month = 6,year = 2011),
+        employee_id = employee4.employee_id
     )
     # Add the object as a new row to the table
     db.session.add(asset8)
@@ -224,8 +225,8 @@ def seed_db():
     asset9 = Asset(
         # set the attributes
         serial_number = "p3779",
-        date_purchased = "jghh",
-        employee_id = employee4.id,
+        date_purchased = date(day = 15, month = 11,year = 2013),
+        employee_id = employee4.employee_id,
     )
     # Add the object as a new row to the table
     db.session.add(asset9)
@@ -234,8 +235,8 @@ def seed_db():
     asset10 = Asset(
         # set the attributes
         serial_number = "w8789",
-        date_purchased = "jghh",
-        employee_id = employee5.id,
+        date_purchased = date(day = 30, month = 6,year = 2016),
+        employee_id = employee5.employee_id,
     )
     # Add the object as a new row to the table
     db.session.add(asset10)
@@ -244,8 +245,8 @@ def seed_db():
     asset11 = Asset(
         # set the attributes
         serial_number = "o8u89",
-        date_purchased = "jghh",
-        employee_id = employee5.id,
+        date_purchased = date(day = 5, month = 9,year = 2022),
+        employee_id = employee5.employee_id
     )
     # Add the object as a new row to the table
     db.session.add(asset11)
@@ -254,8 +255,8 @@ def seed_db():
     asset12 = Asset(
         # set the attributes
         serial_number = "w87rp",
-        date_purchased = "jghh",
-        employee_id = employee5.id,
+        date_purchased = date(day = 25, month = 8,year = 2019),
+        employee_id = employee5.employee_id
     )
     # Add the object as a new row to the table
     db.session.add(asset12)
@@ -264,8 +265,8 @@ def seed_db():
     asset13 = Asset(
         # set the attributes
         serial_number = "w8oh9",
-        date_purchased = "jghh",
-        employee_id = employee5.id,
+        date_purchased = date(day = 1, month = 8,year = 2014),
+        employee_id = employee5.employee_id
     )
     # Add the object as a new row to the table
     db.session.add(asset13)
@@ -277,7 +278,7 @@ def seed_db():
     asset_type1 = AssetType(
         # set the attributes
         description = "HPLC",
-        asset_id = asset1.id, 
+        asset_id = asset1.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(asset_type1)
@@ -286,7 +287,7 @@ def seed_db():
     asset_type2 = AssetType(
         # set the attributes
         description = "HPLC",
-        asset_id = asset2.id,
+        asset_id = asset2.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type2)
@@ -295,7 +296,7 @@ def seed_db():
     asset_type3 = AssetType(
         # set the attributes
         description = "GCMS",
-        asset_id = asset2.id,
+        asset_id = asset2.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type3)
@@ -304,7 +305,7 @@ def seed_db():
     asset_type4 = AssetType(
         # set the attributes
         description = "FTIR",
-        asset_id = asset4.id,
+        asset_id = asset4.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type4)
@@ -313,7 +314,7 @@ def seed_db():
     asset_type5 = AssetType(
         # set the attributes
         description = "IC",
-        asset_id = asset5.id,
+        asset_id = asset5.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type5)
@@ -322,7 +323,7 @@ def seed_db():
     asset_type6 = AssetType(
         # set the attributes
         description = "LCMS",
-        asset_id = asset6.id,
+        asset_id = asset6.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type6)
@@ -331,7 +332,7 @@ def seed_db():
     asset_type7 = AssetType(
         # set the attributes
         description = "LCMS",
-        asset_id = asset7.id,
+        asset_id = asset7.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type7)
@@ -340,7 +341,7 @@ def seed_db():
     asset_type8 = AssetType(
         # set the attributes
         description = "GCMS",
-        asset_id = asset8.id,
+        asset_id = asset8.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type8)
@@ -349,7 +350,7 @@ def seed_db():
     asset_type9 = AssetType(
         # set the attributes
         description = "GCMS",
-        asset_id = asset9.id,
+        asset_id = asset9.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type9)
@@ -358,7 +359,7 @@ def seed_db():
     asset_type10 = AssetType(
         # set the attributes
         description = "GCMS",
-        asset_id = asset10.id,
+        asset_id = asset10.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type10)
@@ -367,7 +368,7 @@ def seed_db():
     asset_type11 = AssetType(
         # set the attributes
         description = "HPLC",
-        asset_id = asset11.id,
+        asset_id = asset11.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type11)
@@ -376,7 +377,7 @@ def seed_db():
     asset_type12 = AssetType(
         # set the attributes
         description = "HPLC",
-        asset_id = asset12.id,
+        asset_id = asset12.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type12)
@@ -385,7 +386,7 @@ def seed_db():
     asset_type13 = AssetType(
         # set the attributes
         description = "FTIR",
-        asset_id = asset13.id,
+        asset_id = asset13.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type13)
@@ -400,7 +401,7 @@ def seed_db():
         manufacturer_contact_number = "111",
         manufacturer_email = "thermo@email.com",
         manufacturer_address = "1 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type1.id
+        asset_type_id = asset_type1.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer1)
@@ -412,7 +413,7 @@ def seed_db():
         manufacturer_contact_number = "22222",
         manufacturer_email = "agilent@email.com",
         manufacturer_address = "2 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type2.id
+        asset_type_id = asset_type2.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer2)
@@ -424,7 +425,7 @@ def seed_db():
         manufacturer_contact_number = "22222",
         manufacturer_email = "agilent@email.com",
         manufacturer_address = "2 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type3.id
+        asset_type_id = asset_type3.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer3)
@@ -436,7 +437,7 @@ def seed_db():
         manufacturer_contact_number = "111",
         manufacturer_email = "thermo@email.com",
         manufacturer_address = "1 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type4.id
+        asset_type_id = asset_type4.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer4)
@@ -448,7 +449,7 @@ def seed_db():
         manufacturer_contact_number = "111",
         manufacturer_email = "thermo@email.com",
         manufacturer_address = "1 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type5.id
+        asset_type_id = asset_type5.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer5)
@@ -460,7 +461,7 @@ def seed_db():
         manufacturer_contact_number = "55555",
         manufacturer_email = "bruker@email.com",
         manufacturer_address = "5 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type6.id
+        asset_type_id = asset_type6.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer6)
@@ -472,7 +473,7 @@ def seed_db():
         manufacturer_contact_number = "33333",
         manufacturer_email = "agilent@email.com",
         manufacturer_address = "3 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type7.id
+        asset_type_id = asset_type7.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer7)
@@ -484,7 +485,7 @@ def seed_db():
         manufacturer_contact_number = "111",
         manufacturer_email = "thermo@email.com",
         manufacturer_address = "1 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type8.id
+        asset_type_id = asset_type8.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer8)
@@ -496,7 +497,7 @@ def seed_db():
         manufacturer_contact_number = "44444",
         manufacturer_email = "pe@email.com",
         manufacturer_address = "4 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type9.id
+        asset_type_id = asset_type9.asset_type_id
     )
      # Add the object as a new row to the table
     db.session.add(manfacturer9)
@@ -508,7 +509,7 @@ def seed_db():
         manufacturer_contact_number = "22222",
         manufacturer_email = "agilent@email.com",
         manufacturer_address = "2 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type10.id
+        asset_type_id = asset_type10.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer10)
@@ -520,7 +521,7 @@ def seed_db():
         manufacturer_contact_number = "55555",
         manufacturer_email = "bruker@email.com",
         manufacturer_address = "5 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type11.id
+        asset_type_id = asset_type11.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer11)
@@ -532,7 +533,7 @@ def seed_db():
         manufacturer_contact_number = "33333",
         manufacturer_email = "agilent@email.com",
         manufacturer_address = "3 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type12.id
+        asset_type_id = asset_type12.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer12)
@@ -544,7 +545,7 @@ def seed_db():
         manufacturer_contact_number = "111",
         manufacturer_email = "thermo@email.com",
         manufacturer_address = "1 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type13.id
+        asset_type_id = asset_type13.asset_type_id
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer13)

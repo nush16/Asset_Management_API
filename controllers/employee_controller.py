@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, abort
 from main import db
 from models.employees import Employee
+from models.assets import Asset
 from models.admin import Admin
 from schemas.employee_schema import employee_schema, employees_schema
 from datetime import date
@@ -21,7 +22,7 @@ def get_employees():
 # The GET employees routes endpoint - get details on one employee
 @employees.route("/<int:id>/", methods=["GET"])
 def get_employee(id):
-    employee = Employee.query.filter_by(id=id).first()
+    employee = Employee.query.get(id)
     #return an error if the card doesn't exist
     if not employee:
         return abort(400, description= "employee does not exist")
@@ -29,6 +30,44 @@ def get_employee(id):
     result = employee_schema.dump(employee)
     # return the data in JSON format
     return jsonify(result)
+
+# The GET employees routes endpoint - get details on one employee
+@employees.route("/assets/<int:id>/", methods=["GET"])
+def get_employee_assets(id):
+    
+    #return an error if the card doesn't exist
+
+    # employee_assets = db.session.query(Employee).join(Asset).filter(Employee.query.get(id)).first()
+
+    assets_and_employees = db.session.query(Asset, Employee)\
+    .join(Employee, Asset.employee_id == Employee.employee_id).all()
+
+    # create a list to store the JSON formatted results
+    results = []
+
+    for asset, employee in assets_and_employees:
+        results.append({
+            'asset_id': asset.employee_id,
+            'asset_name': asset.serial_number,
+            'employee_id': employee.employee_id,
+            'employee_name': employee.first_name
+        })
+
+    # return the JSON formatted results as a response
+    return jsonify(results)
+
+    # # for asset, employee in assets_and_employees:
+    # # print(asset.name, employee.name)
+
+    # if not assets_and_employees:
+    #     return abort(400, description= "employee or asset does not exist")
+    # # Convert the cards from the database into a JSON format and store them in result
+    # result = employee_schema.dump(assets_and_employees)
+    # # return the data in JSON format
+    # return jsonify(result)
+
+
+
 
 # The POST route endpoint - add an employee
 @employees.route("/", methods=["POST"])

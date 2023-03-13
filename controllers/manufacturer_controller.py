@@ -19,7 +19,7 @@ def get_manufacturers():
 # The GET manufacturer routes endpoint - get details on one manufacturer
 @manufacturers.route("/<int:id>/", methods=["GET"])
 def get_manufacturer(id):
-    manufacturer = Manufacturer.query.filter_by(id=id).first()
+    manufacturer = Manufacturer.query.get(id)
     #return an error if the card doesn't exist
     if not manufacturer:
         return abort(400, description= "employee does not exist")

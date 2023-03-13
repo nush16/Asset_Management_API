@@ -19,7 +19,7 @@ def get_asset_types():
 # The GET manufacturer routes endpoint - get details on one asset_type
 @asset_type.route("/<int:id>/", methods=["GET"])
 def get_asset_type(id):
-    asset_type = AssetType.query.filter_by(id=id).first()
+    asset_type = AssetType.query.get(id)
     #return an error if the card doesn't exist
     if not asset_type:
         return abort(400, description= "employee does not exist")

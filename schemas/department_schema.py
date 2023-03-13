@@ -4,7 +4,7 @@ class DepartmentSchema(ma.Schema):
     class Meta:
         ordered = True
         # fields to expose
-        fields = ("id", "department_name", "building_number", "address") 
+        fields = ("department_id", "department_name", "building_number", "address") 
 
 # single department schema
 department_schema = DepartmentSchema()

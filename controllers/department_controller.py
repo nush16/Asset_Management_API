@@ -22,7 +22,7 @@ def get_departments():
 # The GET manufacturer routes endpoint - get details on one customer
 @departments.route("/<int:id>/", methods=["GET"])
 def get_department(id):
-    department = Department.query.filter_by(id=id).first()
+    department = Department.query.get(id)
     #return an error if the card doesn't exist
     if not department:
         return abort(400, description= "department does not exist")

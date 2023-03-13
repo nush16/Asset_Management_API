@@ -6,8 +6,8 @@ class AssetTypeSchema(ma.Schema):
     class Meta:
         ordered = True
         # fields to expose
-        fields = ("id","asset_id", "description")
-    asset_id = fields.Nested(AssetSchema, only = ("id",))
+        fields = ("asset_type_id","asset_id", "description")
+    # asset_id = fields.Nested(AssetSchema, only = ("id",))
 
 # single asset schema
 asset_type_schema = AssetTypeSchema()
