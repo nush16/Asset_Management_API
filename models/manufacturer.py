@@ -4,7 +4,7 @@ class Manufacturer(db.Model):
     # define the table name for the db as asset_manufacturers
     __tablename__= "manufacturers"
     # Set the primary key
-    manufacturere_id = db.Column(db.Integer,primary_key=True)
+    manufacturer_id = db.Column(db.Integer,primary_key=True)
     # the rest of the attributes/columns
     manufacturer_name = db.Column(db.String())
     manufacturer_contact_number = db.Column(db.Integer(), nullable=False)

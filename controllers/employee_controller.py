@@ -19,54 +19,47 @@ def get_employees():
     # return the data in JSON format
     return jsonify(result)
 
-# The GET employees routes endpoint - get details on one employee
+# The GET routes endpoint - get details on one employee
 @employees.route("/<int:id>/", methods=["GET"])
 def get_employee(id):
     employee = Employee.query.get(id)
-    #return an error if the card doesn't exist
+    #return an error if the employee doesn't exist
     if not employee:
         return abort(400, description= "employee does not exist")
-    # Convert the cards from the database into a JSON format and store them in result
+    # Convert the employee from the database into a JSON format and store them in result
     result = employee_schema.dump(employee)
     # return the data in JSON format
     return jsonify(result)
 
-# The GET employees routes endpoint - get details on one employee
-@employees.route("/assets/<int:id>/", methods=["GET"])
-def get_employee_assets(id):
-    
-    #return an error if the card doesn't exist
+# The GET routes endpoint - get assets for one employee  
+@employees.route('/assets/<int:employee_id>', methods=["GET"])
+def employee_assets(employee_id):
+    employee = Employee.query.get(employee_id)
+    if not employee:
+        return jsonify({'error': 'Employee not found'})
+    assets_dict_list = []
+    for asset in employee.assets:
+        asset_dict = {'asset_id': asset.asset_id, 'asset_name': asset.asset_name, 'serial_number':asset.serial_number}
+        assets_dict_list.append(asset_dict)
+    employee_dict = {'employee_id': employee.employee_id, 'first_name': employee.first_name, 'last_name': employee.last_name, 'assets': assets_dict_list}
+    return jsonify(employee_dict)
 
-    # employee_assets = db.session.query(Employee).join(Asset).filter(Employee.query.get(id)).first()
-
-    assets_and_employees = db.session.query(Asset, Employee)\
-    .join(Employee, Asset.employee_id == Employee.employee_id).all()
-
-    # create a list to store the JSON formatted results
-    results = []
-
-    for asset, employee in assets_and_employees:
-        results.append({
-            'asset_id': asset.employee_id,
-            'asset_name': asset.serial_number,
-            'employee_id': employee.employee_id,
-            'employee_name': employee.first_name
-        })
-
-    # return the JSON formatted results as a response
-    return jsonify(results)
-
-    # # for asset, employee in assets_and_employees:
-    # # print(asset.name, employee.name)
-
-    # if not assets_and_employees:
-    #     return abort(400, description= "employee or asset does not exist")
-    # # Convert the cards from the database into a JSON format and store them in result
-    # result = employee_schema.dump(assets_and_employees)
-    # # return the data in JSON format
-    # return jsonify(result)
-
-
+# The GET routes endpoint - get mmnufacturer and assets for a employee  
+@employees.route('/manufacturer/<int:employee_id>', methods=["GET"])
+def employee_manufacturer(employee_id):
+    employee = Employee.query.get(employee_id)
+    if not employee:
+        return jsonify({'error': 'Employee not found'})
+    assets_dict_list = []
+    for asset in employee.assets:
+        asset_dict = {'asset_id': asset.asset_id, 'asset_name': asset.asset_name, 'serial_number':asset.serial_number}
+        assets_dict_list.append(asset_dict)
+        for assettype in asset.asset_type_id:
+            for manufacturer in assettype.manufacturer:
+                manufacturer_dict = {'manufacturer_id': manufacturer.manufacturer_id, 'manufacturer_name': manufacturer.manufacturer_name, 'manufacturer_contact_number': manufacturer.manufacturer_contact_number,'manufacturer_email': manufacturer.manufacturer_email}
+                assets_dict_list.append(manufacturer_dict)
+    employee_dict = {'employee_id': employee.employee_id, 'first_name': employee.first_name, 'last_name': employee.last_name, 'asset_manufacturer': assets_dict_list}
+    return jsonify(employee_dict)
 
 
 # The POST route endpoint - add an employee

@@ -6,6 +6,7 @@ class Asset(db.Model):
     # Set the primary key
     asset_id = db.Column(db.Integer,primary_key=True)
     # the rest of the attributes/columns
+    asset_name = db.Column(db.String(), nullable=False) 
     serial_number  = db.Column(db.String(), nullable=False) 
     date_purchased = db.Column(db.Date(), nullable=False) 
      # link to asset_type

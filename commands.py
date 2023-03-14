@@ -144,6 +144,7 @@ def seed_db():
     # create the asset object
     asset1 = Asset(
         # set the attributes
+        asset_name = "Vanquish",
         serial_number = "a3546",
         date_purchased = date(day = 15, month = 3,year = 2009),
         employee_id = employee1.employee_id
@@ -154,6 +155,7 @@ def seed_db():
     # create the asset object
     asset2 = Asset(
         # set the attributes
+        asset_name = "Infinity",
         serial_number = "r3547",
         date_purchased = date(day = 8, month = 7,year = 2020),
         employee_id = employee1.employee_id
@@ -164,6 +166,7 @@ def seed_db():
     # create the asset object
     asset3 = Asset(
         # set the attributes
+        asset_name = "7000E",
         serial_number = "a3548",
         date_purchased = date(day = 9, month = 4,year = 2021),
         employee_id = employee2.employee_id
@@ -174,6 +177,7 @@ def seed_db():
     # create the asset object
     asset4 = Asset(
         # set the attributes
+        asset_name = "iS10",
         serial_number = "e3558",
         date_purchased = date(day = 20, month = 9,year = 2015),
         employee_id = employee2.employee_id
@@ -184,6 +188,7 @@ def seed_db():
     # create the asset object
     asset5 = Asset(
         # set the attributes
+        asset_name = "Aquion",
         serial_number = "w3559",
         date_purchased = date(day = 7, month = 7,year = 2017),
         employee_id = employee3.employee_id
@@ -194,6 +199,7 @@ def seed_db():
     # create the asset object
     asset6 = Asset(
         # set the attributes
+        asset_name = "Maldi",
         serial_number = "z3579",
         date_purchased = date(day = 8, month = 7,year = 2013),
         employee_id = employee3.employee_id
@@ -204,6 +210,7 @@ def seed_db():
     # create the asset object
     asset7 = Asset(
         # set the attributes
+        asset_name = "8060NX",
         serial_number = "b3479",
         date_purchased = date(day = 15, month = 4,year = 2022),
         employee_id = employee4.employee_id
@@ -214,8 +221,9 @@ def seed_db():
     # create the asset object
     asset8 = Asset(
         # set the attributes
+        asset_name = "TSQ8000",
         serial_number = "y3499",
-        date_purchased = date(day = 9, month = 6,year = 2011),
+        date_purchased = date(day = 9, month = 6,year = 2018),
         employee_id = employee4.employee_id
     )
     # Add the object as a new row to the table
@@ -224,6 +232,7 @@ def seed_db():
     # create the asset object
     asset9 = Asset(
         # set the attributes
+        asset_name = "PEGCMS",
         serial_number = "p3779",
         date_purchased = date(day = 15, month = 11,year = 2013),
         employee_id = employee4.employee_id,
@@ -234,6 +243,7 @@ def seed_db():
     # create the asset object
     asset10 = Asset(
         # set the attributes
+        asset_name = "7000E",
         serial_number = "w8789",
         date_purchased = date(day = 30, month = 6,year = 2016),
         employee_id = employee5.employee_id,
@@ -244,6 +254,7 @@ def seed_db():
     # create the asset object
     asset11 = Asset(
         # set the attributes
+        asset_name = "Elute",
         serial_number = "o8u89",
         date_purchased = date(day = 5, month = 9,year = 2022),
         employee_id = employee5.employee_id
@@ -254,6 +265,7 @@ def seed_db():
     # create the asset object
     asset12 = Asset(
         # set the attributes
+        asset_name = "LC-2030C",
         serial_number = "w87rp",
         date_purchased = date(day = 25, month = 8,year = 2019),
         employee_id = employee5.employee_id
@@ -264,6 +276,7 @@ def seed_db():
     # create the asset object
     asset13 = Asset(
         # set the attributes
+        asset_name = "iS50",
         serial_number = "w8oh9",
         date_purchased = date(day = 1, month = 8,year = 2014),
         employee_id = employee5.employee_id
@@ -296,7 +309,7 @@ def seed_db():
     asset_type3 = AssetType(
         # set the attributes
         description = "GCMS",
-        asset_id = asset2.asset_id
+        asset_id = asset3.asset_id
     )
     # Add the object as a new row to the table
     db.session.add(asset_type3)
@@ -471,7 +484,7 @@ def seed_db():
         # set the attributes
         manufacturer_name = "Shimadzu",
         manufacturer_contact_number = "33333",
-        manufacturer_email = "agilent@email.com",
+        manufacturer_email = "shimadzu@email.com",
         manufacturer_address = "3 Tree Road, Sydney, NSW",
         asset_type_id = asset_type7.asset_type_id
     )
@@ -531,7 +544,7 @@ def seed_db():
         # set the attributes
         manufacturer_name = "Shimadzu",
         manufacturer_contact_number = "33333",
-        manufacturer_email = "agilent@email.com",
+        manufacturer_email = "shimadzu@email.com",
         manufacturer_address = "3 Tree Road, Sydney, NSW",
         asset_type_id = asset_type12.asset_type_id
     )

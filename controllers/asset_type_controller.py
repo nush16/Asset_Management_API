@@ -28,6 +28,7 @@ def get_asset_type(id):
     # return the data in JSON format
     return jsonify(result)
 
+
 # The POST route endpoint - add a asset_type
 @asset_type.route("/", methods=["POST"])
 def create_asset_type():

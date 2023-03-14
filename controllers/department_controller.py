@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, abort
 from main import db
 from models.departments import Department
 from models.admin import Admin
+from models.assets import Asset
 from schemas.department_schema import department_schema, departments_schema
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -19,18 +20,31 @@ def get_departments():
     # return jsonify(result)
     return jsonify(result)
 
-# The GET manufacturer routes endpoint - get details on one customer
+# The GET routes endpoint - get details on one employee
 @departments.route("/<int:id>/", methods=["GET"])
 def get_department(id):
     department = Department.query.get(id)
-    #return an error if the card doesn't exist
+    #return an error if the department doesn't exist
     if not department:
         return abort(400, description= "department does not exist")
-    # Convert the cards from the database into a JSON format and store them in result
+    # Convert the departments from the database into a JSON format and store them in result
     result = department_schema.dump(department)
     # return the data in JSON format
     return jsonify(result)
 
+# The GET routes endpoint - get all assets in a department
+@departments.route('/assets/<int:department_id>', methods=["GET"])
+def employee_assets (department_id):
+    department = Department.query.get(department_id)
+    if not department:
+        return jsonify({'error': 'Department not found'})
+    assets_dict_list = []
+    for employee in department.employees:
+        for asset in employee.assets:
+            asset_dict = {'asset_id': asset.asset_id, 'asset_name': asset.asset_name, 'serial_number':asset.serial_number}
+            assets_dict_list.append(asset_dict)
+    department_dict = {'department_id': department.department_id, 'department_name': department.department_name,'assets': assets_dict_list}
+    return jsonify(department_dict)
 
 # The POST route endpoint - add a department
 @departments.route("/", methods=["POST"])
