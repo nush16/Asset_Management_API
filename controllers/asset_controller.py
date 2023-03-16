@@ -60,10 +60,20 @@ def asset_type_assets (asset_id):
 
 # The POST route endpoint - add a asset
 @assets.route("/", methods=["POST"])
+@jwt_required()
 def create_asset():
     #Create a new asset
     asset_fields = asset_schema.load(request.json)
-
+    # get the user id invoking get_jwt_identity
+    user_id = get_jwt_identity()
+    # Find it in the db
+    user = User.query.get(user_id)
+    #Make sure it is in the database
+    if not user:
+        return abort(401, description="Invalid user")
+    # Stop the request if the user is not an admin
+    if not user.admin:
+        return abort(401, description="Unauthorised user")
     new_asset = Asset()
     new_asset.asset_name = asset_fields ["asset_name"]
     new_asset.serial_number = asset_fields["serial_number"]
@@ -81,7 +91,7 @@ def create_asset():
 @assets.route("/<int:id>/", methods=["PUT"])
 # @jwt_required()
 def update_asset(id):
-    # #Create a new card
+    # Create a new asset
     asset_fields = asset_schema.load(request.json)
     # get the user id invoking get_jwt_identity
     user_id = get_jwt_identity()
@@ -109,8 +119,6 @@ def update_asset(id):
     #return the asset in the response
     return jsonify(asset_schema.dump(asset))
 
-
-
 # The DELETE route endpoint - delete a asset
 @assets.route("/<int:id>/", methods=["DELETE"])
 @jwt_required()
@@ -133,5 +141,5 @@ def delete_asset(id):
     #Delete the asset from the database and commit
     db.session.delete(asset)
     db.session.commit()
-    #return the card in the response
+    #return the asset in the response
     return jsonify(asset_schema.dump(asset))
