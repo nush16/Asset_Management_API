@@ -1,8 +1,10 @@
 from flask import Blueprint, jsonify, request, abort
 from main import db
 from models.assets import Asset
+from models.users import User
 from schemas.asset_schema import asset_schema, assets_schema
 from datetime import date
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 assets = Blueprint('assets', __name__, url_prefix="/assets")
 
@@ -81,23 +83,22 @@ def create_asset():
 def update_asset(id):
     # #Create a new card
     asset_fields = asset_schema.load(request.json)
-
-    #get the user id invoking get_jwt_identity
-    # user_id = get_jwt_identity()
-    #Find it in the db
-    # user = User.query.get(user_id)
-    # #Make sure it is in the database
-    # if not user:
-    #     return abort(401, description="Invalid user")
-    # # Stop the request if the user is not an admin
-    # if not user.admin:
-    #     return abort(401, description="Unauthorised user")
-    # # find the card
+    # get the user id invoking get_jwt_identity
+    user_id = get_jwt_identity()
+    # Find it in the db
+    user = User.query.get(user_id)
+    #Make sure it is in the database
+    if not user:
+        return abort(401, description="Invalid user")
+    # Stop the request if the user is not an admin
+    if not user.admin:
+        return abort(401, description="Unauthorised user")
+    # find the asset
     asset = Asset.query.filter_by(id=id).first()
-    # #return an error if the card doesn't exist
-    # if not card:
-    #     return abort(400, description= "Card does not exist")
-    #update the car details with the given values
+    #return an error if the asset doesn't exist
+    if not asset:
+        return abort(400, description= "Asset does not exist")
+    # update the asset details with the given values
     asset.serial_number = asset_fields["serial_number"]
     asset.date_purchased = asset_fields["date_purchased"]
     asset.employee_id = asset_fields["employee_id"]
@@ -105,30 +106,31 @@ def update_asset(id):
     asset.date = date.today()
     # add to the database and commit
     db.session.commit()
-    #return the card in the response
+    #return the asset in the response
     return jsonify(asset_schema.dump(asset))
 
 
 
 # The DELETE route endpoint - delete a asset
 @assets.route("/<int:id>/", methods=["DELETE"])
+@jwt_required()
 def delete_asset(id):
-    # #get the user id invoking get_jwt_identity
-    # user_id = get_jwt_identity()
-    # #Find it in the db
-    # user = User.query.get(user_id)
-    # #Make sure it is in the database
-    # if not user:
-    #     return abort(401, description="Invalid user")
-    # # Stop the request if the user is not an admin
-    # if not user.admin:
-    #     return abort(401, description="Unauthorised user")
-    # # find the card
-    asset = Asset.query.filter_by(id=id).first()
-    # #return an error if the card doesn't exist
-    # if not Card:
-    #     return abort(400, description= "Card doesn't exist")
-    # #Delete the card from the database and commit
+    #get the user id invoking get_jwt_identity
+    user_id = get_jwt_identity()
+    #Find it in the db
+    user = User.query.get(user_id)
+    #Make sure it is in the database
+    if not user:
+        return abort(401, description="Invalid user")
+    # Stop the request if the user is not an admin
+    if not user.admin:
+        return abort(401, description="Unauthorised user")
+    # find the card
+    asset = Asset.query.filter_by(asset_id=id).first()
+    #return an error if the asset doesn't exist
+    if not asset:
+        return abort(400, description= "Card doesn't exist")
+    #Delete the asset from the database and commit
     db.session.delete(asset)
     db.session.commit()
     #return the card in the response

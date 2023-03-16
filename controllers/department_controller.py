@@ -1,8 +1,7 @@
 from flask import Blueprint, jsonify, request, abort
 from main import db
 from models.departments import Department
-from models.admin import Admin
-from models.assets import Asset
+from models.users import User
 from schemas.department_schema import department_schema, departments_schema
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -67,27 +66,26 @@ def create_department():
 
 # The PUT route endpoint - update department details
 @departments.route("/<int:id>/", methods=["PUT"])
-# @jwt_required()
+@jwt_required()
 def update_department(id):
-    # #Create a new card
+    # Create a new department
     department_fields = department_schema.load(request.json)
-
-    #get the user id invoking get_jwt_identity
-    # user_id = get_jwt_identity()
-    #Find it in the db
-    # user = User.query.get(user_id)
-    # #Make sure it is in the database
-    # if not user:
-    #     return abort(401, description="Invalid user")
-    # # Stop the request if the user is not an admin
-    # if not user.admin:
-    #     return abort(401, description="Unauthorised user")
-    # # find the card
-    department = Department.query.filter_by(id=id).first()
-    # #return an error if the card doesn't exist
-    # if not card:
-    #     return abort(400, description= "Card does not exist")
-    #update the car details with the given values
+    # get the user id invoking get_jwt_identity
+    user_id = get_jwt_identity()
+    # Find it in the db
+    user = User.query.get(user_id)
+    #Make sure it is in the database
+    if not user:
+        return abort(401, description="Invalid user")
+    # Stop the request if the user is not an admin
+    if not user.admin:
+        return abort(401, description="Unauthorised user")
+    # find the department
+    department = Department.query.filter_by(department_id=id).first()
+    #return an error if the department doesn't exist
+    if not department:
+        return abort(400, description= "Department does not exist")
+    # update the department details with the given values
     department.department_name = department_fields["department_name"]
     department.building_number = department_fields["building_number"]
     department.address = department_fields["address"]
@@ -102,23 +100,23 @@ def update_department(id):
 
 # The DELETE route endpoint - delete a department
 @departments.route("/<int:id>/", methods=["DELETE"])
-# @jwt_required()
+@jwt_required()
 def delete_department(id):
-    #get the admin id invoking get_jwt_identity
-    # admin_id = get_jwt_identity()
-    # #Find it in the db
-    # admin = Admin.query.get(admin_id)
-    # #Make sure it is in the database
-    # if not admin:
-    #     return abort(401, description="Invalid user")
+    #get the user id invoking get_jwt_identity
+    user_id = get_jwt_identity()
+    #Find it in the db
+    user = User.query.get(user_id)
+    #Make sure it is in the database
+    if not user:
+        return abort(401, description="Invalid user")
     # Stop the request if the user is not an admin
-    # if not admin.admin:
-    #     return abort(401, description="Unauthorised user")
+    if not user.admin:
+        return abort(401, description="Unauthorised user")
     # find the department
-    department = Department.query.filter_by(id=id).first()
+    department = Department.query.filter_by(department_id=id).first()
     #return an error if the department doesn't exist
     if not department:
-        return abort(400, description= "department doesn't exist")
+        return abort(400, description= "Department doesn't exist")
     #Delete the department from the database and commit
     db.session.delete(department)
     db.session.commit()
