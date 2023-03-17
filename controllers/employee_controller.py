@@ -2,13 +2,20 @@ from flask import Blueprint, jsonify, request, abort
 from main import db
 from models.employees import Employee
 from models.users import User
-from models.departments import Department
+from marshmallow import ValidationError
 from werkzeug.exceptions import BadRequest
 from schemas.employee_schema import employee_schema, employees_schema
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 employees = Blueprint('employees', __name__, url_prefix="/employees")
+
+# error handler for validation error in marshmallow
+@employees.errorhandler(ValidationError)
+def handle_validation_error(error):
+    response = jsonify({'please check this field again': error.messages})
+    response.status_code = 400
+    return response
 
 # The GET route endpoint - get all the employees
 @employees.route("/", methods=["GET"])
@@ -93,7 +100,7 @@ def create_employees():
         db.session.add(new_employee)
         db.session.commit()
         #return the employee in the response
-        return jsonify(employee_schema.dump(new_employee))
+        return jsonify("Employee added", employee_schema.dump(new_employee))
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
@@ -135,7 +142,7 @@ def update_employee(id):
         # add to the database and commit
         db.session.commit()
         #return the employee in the response
-        return jsonify(employee_schema.dump(employee))
+        return jsonify("Employee updated",employee_schema.dump(employee))
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
@@ -167,5 +174,5 @@ def delete_employee(id):
     db.session.delete(employee)
     db.session.commit()
     #return the employee in the response
-    return jsonify(employee_schema.dump(employee))
+    return jsonify("Employee deleted", employee_schema.dump(employee))
   

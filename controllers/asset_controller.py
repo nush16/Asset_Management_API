@@ -81,7 +81,7 @@ def create_asset():
     user = User.query.get(user_id)
     #Make sure it is in the database
     if not user:
-        return abort(401, description="Invalid user")
+        return abort(403, description="Invalid user")
     # Stop the request if the user is not an admin
     if not user.admin:
         return abort(401, description="Unauthorised user")
@@ -99,7 +99,7 @@ def create_asset():
         db.session.add(new_asset)
         db.session.commit()
         #return the asset in the response
-        return jsonify(asset_schema.dump(new_asset))
+        return jsonify("Asset added", asset_schema.dump(new_asset))
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
@@ -138,7 +138,7 @@ def update_asset(id):
         # add to the database and commit
         db.session.commit()
         #return the asset in the response
-        return jsonify(asset_schema.dump(asset))
+        return jsonify("Asset updated",asset_schema.dump(asset))
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
@@ -170,4 +170,4 @@ def delete_asset(id):
     db.session.delete(asset)
     db.session.commit()
     #return the asset in the response
-    return jsonify(asset_schema.dump(asset))
+    return jsonify("Asset deleted",asset_schema.dump(asset))

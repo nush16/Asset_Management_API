@@ -4,10 +4,18 @@ from models.manufacturer import Manufacturer
 from models.users import User
 from schemas.manufacturer_schema import manufacturer_schema, manufacturers_schema
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from marshmallow import ValidationError
 from werkzeug.exceptions import BadRequest
 from datetime import date
 
 manufacturers = Blueprint('manufacturers', __name__, url_prefix="/manufacturers")
+
+# error handler for validation error in marshmallow
+@manufacturers.errorhandler(ValidationError)
+def handle_validation_error(error):
+    response = jsonify({'please check this field again': error.messages})
+    response.status_code = 400
+    return response
 
 # The GET route endpoint - get all manufacturers
 @manufacturers.route("/", methods=["GET"])
@@ -60,7 +68,7 @@ def create_manufacturers():
         db.session.add(new_manufacturer)
         db.session.commit()
         #return the manufacturer in the response
-        return jsonify(manufacturer_schema.dump(new_manufacturer))
+        return jsonify("Manufacturer added", manufacturer_schema.dump(new_manufacturer))
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
@@ -100,7 +108,7 @@ def update_manufacturer(id):
         # add to the database and commit
         db.session.commit()
         #return the manufacturer in the response
-        return jsonify(manufacturer_schema.dump(manufacturer))
+        return jsonify("Manufacturer updated", manufacturer_schema.dump(manufacturer))
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
@@ -132,4 +140,4 @@ def delete_asset(id):
     db.session.delete(manufacturer)
     db.session.commit()
     #return the manufacturer in the response
-    return jsonify(manufacturer_schema.dump(manufacturer))
+    return jsonify("Manufacturer deleted", manufacturer_schema.dump(manufacturer))

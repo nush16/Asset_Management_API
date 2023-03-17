@@ -9,7 +9,7 @@ I came accross this problem in real life where I was helping a customer in reloc
 * what type is instrument (could other manufacturers relocate) 
 * when was the last PM/qualification for the instrument - will it need to be done when relocated
 
-They were dealing with over 600 manfacturers (Internationally and locally) and spent over a year trying to get this data. The API I have created (even though on a simplier scale) was designed to address and rectify all these issues in indentifying where lab instruments could belong. I have also added a model to include service 
+They were dealing with over 600 manfacturers (Internationally and locally) and spent over a year trying to get this data. The API I have created (even though on a simplier scale) was designed to address and rectify all these issues in indentifying where lab instruments could belong. 
 
 ## *Why is it a problem that needs solving?*
 asset management is 
@@ -30,32 +30,130 @@ asset management is
 
 ## *Document all endpoints for your API*
 
-- Get all employees
-- Get all assets
-- Get all manufacturers
-- Get all departments
-- Get all assets in a department
-- Get assets a employee could have
-- Get all manufacturers assets a department has
-- Get all service history for the asset
+### View all employees
+'GET' - http://127.0.0.1:5000/employees
 
-- Delete employee
-- Delete asset
-- Delete department
-- Delete manufacturer 
+RESPONSE: 
 
-- Add employee
-- Add asset
-- Add manufacturer
-- Add department
-- Add service history
-- Add user
 
-- Update employee
-- Update asset
-- Update manufacturer
-- Update department
-- Update service history
+### View all assets
+'GET' - http://127.0.0.1:5000/assets
+
+RESPONSE: 
+
+### View all manufacturers
+'GET' - http://127.0.0.1:5000/manufacturers
+
+RESPONSE: 
+
+### View all departments
+'GET' - http://127.0.0.1:5000/departments
+
+RESPONSE: 
+
+
+### View all assets in a department
+'GET' - 
+
+RESPONSE:
+
+### View assets a employee could have
+'GET' - 
+
+RESPONSE:
+
+### View all manufacturers assets a department has
+'GET' - 
+
+RESPONSE:
+
+### View all service history for the asset
+'GET' - 
+
+RESPONSE:
+
+### Delete employee
+'DELETE' - 
+
+RESPONSE:
+
+### Delete asset
+'DELETE' - 
+
+RESPONSE:
+
+### Delete department
+'DELETE' - 
+
+RESPONSE:
+
+### Delete manufacturer 
+'DELETE' - 
+
+RESPONSE:
+
+### Delete service job 
+'DELETE' - 
+
+RESPONSE:
+
+
+### Add employee
+'POST' - 
+
+RESPONSE:
+
+### Add asset
+'POST' - 
+
+RESPONSE:
+
+### Add manufacturer
+'POST' - 
+
+RESPONSE:
+
+
+### Add department
+'POST' - 
+
+RESPONSE:
+
+### Add service job
+'POST' - 
+
+RESPONSE:
+
+### Add user
+'POST' - 
+
+RESPONSE:
+
+### Update employee
+'PUT' - 
+
+RESPONSE:
+
+### Update asset
+'PUT' - 
+
+RESPONSE:
+
+### Update manufacturer
+'PUT' - 
+
+RESPONSE:
+
+### Update department
+'PUT' - 
+
+RESPONSE:
+
+### Update service job
+'PUT' - 
+
+RESPONSE:
+
 
 
 ## *An ERD for your app*
@@ -68,6 +166,7 @@ Bcrypt
 
 Marshmallow
 
+Werkzeug
 
 ## *Describe your projects models in terms of the relationships they have with each other*
 

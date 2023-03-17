@@ -2,12 +2,19 @@ from flask import Blueprint, jsonify, request, abort
 from main import db
 from models.users import User
 from schemas.user_schema import user_schema
+from marshmallow import ValidationError
 from datetime import timedelta
 from main import bcrypt
 from flask_jwt_extended import create_access_token
 
 auth = Blueprint('auth', __name__, url_prefix="/auth")
 
+# error handler for validation error in marshmallow
+@auth.errorhandler(ValidationError)
+def handle_validation_error(error):
+    response = jsonify({'please check this field again': error.messages})
+    response.status_code = 400
+    return response
 
 @auth.route("/register", methods=["POST"])
 def auth_register():
@@ -47,7 +54,6 @@ def auth_login():
     # there is not a user with that email or if the password is no correct send an error
     if not user or not bcrypt.check_password_hash(user.password, user_fields["password"]):
         return abort(401, description="Incorrect username and password")
-    
     #create a variable that sets an expiry date
     expiry = timedelta(days=1)
     #create the access token

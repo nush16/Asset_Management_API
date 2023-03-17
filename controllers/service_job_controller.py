@@ -2,12 +2,20 @@ from flask import Blueprint, jsonify, request, abort
 from main import db
 from models.service_job import ServiceJob
 from models.users import User
+from marshmallow import ValidationError
 from werkzeug.exceptions import BadRequest
 from schemas.service_job_schema import service_job_schema, service_jobs_schema
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 service_job = Blueprint('service_jobs', __name__, url_prefix="/service_job")
+
+# error handler for validation error in marshmallow
+@service_job.errorhandler(ValidationError)
+def handle_validation_error(error):
+    response = jsonify({'please check this field again': error.messages})
+    response.status_code = 400
+    return response
 
 # The GET route endpoint - get all the service_jobs
 @service_job.route("/", methods=["GET"])
@@ -59,7 +67,7 @@ def create_service_job():
         db.session.add(new_service_job)
         db.session.commit()
         # Return the service_job in the response
-        return jsonify(service_job_schema.dump(new_service_job))
+        return jsonify("Service job added",service_job_schema.dump(new_service_job))
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
@@ -99,7 +107,7 @@ def update_service_job(id):
         db.session.add(service_job)
         db.session.commit()
         # Return the asset_type in the response
-        return jsonify(service_job_schema.dump(service_job))
+        return jsonify("Service job updated",service_job_schema.dump(service_job))
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
@@ -130,5 +138,5 @@ def delete_service_job(id):
     db.session.delete(service_job)
     db.session.commit()
     # Return the service job in the response
-    return jsonify(service_job_schema.dump(service_job))
+    return jsonify("Service job deleted", service_job_schema.dump(service_job))
    

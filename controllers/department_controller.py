@@ -3,11 +3,19 @@ from main import db
 from models.departments import Department
 from models.users import User
 from werkzeug.exceptions import BadRequest
+from marshmallow import ValidationError
 from schemas.department_schema import department_schema, departments_schema
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 departments = Blueprint('departments', __name__ , url_prefix="/departments")
+
+# error handler for validation error in marshmallow
+@departments.errorhandler(ValidationError)
+def handle_validation_error(error):
+    response = jsonify({'please check this field again': error.messages})
+    response.status_code = 400
+    return response
 
 # The GET route endpoint - get all the departments
 @departments.route("/", methods=["GET"])
@@ -50,9 +58,11 @@ def employee_assets (department_id):
 @departments.route("/", methods=["POST"])
 @jwt_required()
 def create_department():
+    department_fields = department_schema.load(request.json)
+    data = request.get_json()
+
     try:
         #Create a new department
-        department_fields = department_schema.load(request.json)
         new_department = Department()
         new_department.department_name = department_fields["department_name"]
         new_department.building_number = department_fields["building_number"]
@@ -63,7 +73,9 @@ def create_department():
         db.session.add(new_department)
         db.session.commit()
         #return the department in the response
-        return jsonify(department_schema.dump(new_department))
+        return jsonify("Department added", department_schema.dump(new_department))
+    except ValueError:
+        return jsonify ({'error': 'Invalid parameter'}), 400
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
@@ -102,7 +114,7 @@ def update_department(id):
         # add to the database and commit
         db.session.commit()
         #return the card in the response
-        return jsonify(department_schema.dump(department))
+        return jsonify("Department updated",department_schema.dump(department))
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
@@ -134,5 +146,5 @@ def delete_department(id):
     db.session.delete(department)
     db.session.commit()
     #return the card in the response
-    return jsonify(department_schema.dump(department))
+    return jsonify("Department deleted",department_schema.dump(department))
    
