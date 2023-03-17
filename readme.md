@@ -7,8 +7,9 @@ I came accross this problem in real life where I was helping a customer in reloc
 * who the manufacturer of the instrument is
 * what the serial number of the instrument is 
 * what type is instrument (could other manufacturers relocate) 
+* when was the last PM/qualification for the instrument - will it need to be done when relocated
 
-They were dealing with over 600 manfacturers (Internationally and locally) and spent over a year trying to get this data. The API I have created (even though on a simplier scale) was designed to address and rectify all these issues in indentifying where lab instruments could belong.
+They were dealing with over 600 manfacturers (Internationally and locally) and spent over a year trying to get this data. The API I have created (even though on a simplier scale) was designed to address and rectify all these issues in indentifying where lab instruments could belong. I have also added a model to include service 
 
 ## *Why is it a problem that needs solving?*
 asset management is 
@@ -36,6 +37,7 @@ asset management is
 - Get all assets in a department
 - Get assets a employee could have
 - Get all manufacturers assets a department has
+- Get all service history for the asset
 
 - Delete employee
 - Delete asset
@@ -46,11 +48,14 @@ asset management is
 - Add asset
 - Add manufacturer
 - Add department
+- Add service history
+- Add user
 
 - Update employee
 - Update asset
 - Update manufacturer
 - Update department
+- Update service history
 
 
 ## *An ERD for your app*
@@ -74,6 +79,9 @@ This is a one to many relationship. A employee can have many assets, while only 
 
 ### Assets and Manufacturers
 This is a one to many relationship. A asset only be manufactured by only one manufacturer while one manufacturer can manufacturer many different types of assets
+
+### Assets and Service Histoy
+This is a one to many relationship. A asset could only have the service job done for it, while there could be many service history jobs associated with that asset 
 
 ### Users
 This is model only has access to the data in the tables and has no relationship in the ERD. Only with admin privliges can a user insert, update and delete data in the tables. A standard user can only view data in the tables
@@ -109,11 +117,5 @@ These were the steps I used to track and visualise my project
 11. added 'PUT', 'POST' and 'DELETE' to the controller.
 12. Testing - document this 
 
-## *admin privileges*
-
-- add, delete and update employees
-- add, delete and update manufacturers
-- add, delete and update departments
-- add, delete and update assets
   
 

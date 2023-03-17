@@ -4,7 +4,7 @@ class ManufacturerSchema(ma.Schema):
     class Meta:
         ordered = True
         # fields to expose
-        fields = ("manufacturer_id", "manufacturer_name", "manufacturer_contact_number", "manufacturer_email", "manufacturer_address", "asset_type_id") 
+        fields = ("manufacturer_id", "manufacturer_name", "manufacturer_contact_number", "manufacturer_email", "manufacturer_address", "asset_id") 
 
 
 # single asset manufacturer schema

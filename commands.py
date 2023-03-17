@@ -5,7 +5,7 @@ from models.users import User
 from models.departments import Department
 from models.employees import Employee
 from models.assets import Asset
-from models.asset_type import AssetType
+from models.service_job import ServiceJob
 from models.manufacturer import Manufacturer
 from datetime import date
 
@@ -294,121 +294,316 @@ def seed_db():
     db.session.commit()
 
     # create the asset_type object
-    asset_type1 = AssetType(
+    service_job1 = ServiceJob(
         # set the attributes
-        description = "HPLC",
+        service_description = "PM",
+        service_date = date(day = 1, month = 6,year = 2021),
         asset_id = asset1.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type1)
+    db.session.add(service_job1)
 
     # create the asset_type object
-    asset_type2 = AssetType(
+    service_job2 = ServiceJob(
         # set the attributes
-        description = "HPLC",
-        asset_id = asset2.asset_id
+        service_description = "PM",
+        service_date = date(day = 1, month = 8,year = 2022),
+        asset_id = asset1.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type2)
+    db.session.add(service_job2)
 
     # create the asset_type object
-    asset_type3 = AssetType(
+    service_job3 = ServiceJob(
         # set the attributes
-        description = "GCMS",
-        asset_id = asset3.asset_id
+        service_description = "Qualification",
+        service_date = date(day = 5, month = 5,year = 2017),
+        asset_id = asset1.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type3)
+    db.session.add(service_job3)
 
      # create the asset_type object
-    asset_type4 = AssetType(
+    # create the asset_type object
+    service_job4 = ServiceJob(
         # set the attributes
-        description = "FTIR",
-        asset_id = asset4.asset_id
+        service_description = "PM",
+        service_date = date(day = 1, month = 8,year = 2021),
+        asset_id = asset2.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type4)
+    db.session.add(service_job4)
 
     # create the asset_type object
-    asset_type5 = AssetType(
+    service_job5 = ServiceJob(
         # set the attributes
-        description = "IC",
-        asset_id = asset5.asset_id
+        service_description = "Qualification",
+        service_date = date(day = 5, month = 8,year = 2022),
+        asset_id = asset2.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type5)
+    db.session.add(service_job5)
 
     # create the asset_type object
-    asset_type6 = AssetType(
+    service_job6 = ServiceJob(
         # set the attributes
-        description = "LCMS",
-        asset_id = asset6.asset_id
+        service_description = "Qualification",
+        service_date = date(day = 1, month = 4,year = 2021),
+        asset_id = asset3.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type6)
+    db.session.add(service_job6)
 
     # create the asset_type object
-    asset_type7 = AssetType(
+    service_job7 = ServiceJob(
         # set the attributes
-        description = "LCMS",
-        asset_id = asset7.asset_id
+        service_description = "Qualification",
+        service_date = date(day = 1, month = 8,year = 2022),
+        asset_id = asset3.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type7)
+    db.session.add(service_job7)
 
-    # create the asset object
-    asset_type8 = AssetType(
+    # create the asset_type object
+    service_job8 = ServiceJob(
         # set the attributes
-        description = "GCMS",
-        asset_id = asset8.asset_id
+        service_description = "Repair",
+        service_date = date(day = 9, month = 8,year = 2021),
+        asset_id = asset4.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type8)
+    db.session.add(service_job8)
 
-    # create the asset object
-    asset_type9 = AssetType(
+    # create the asset_type object
+    service_job9 = ServiceJob(
         # set the attributes
-        description = "GCMS",
-        asset_id = asset9.asset_id
+        service_description = "PM",
+        service_date = date(day = 24, month = 8,year = 2021),
+        asset_id = asset4.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type9)
+    db.session.add(service_job9)
 
-    # create the asset object
-    asset_type10 = AssetType(
+    # create the asset_type object
+    service_job10 = ServiceJob(
         # set the attributes
-        description = "GCMS",
-        asset_id = asset10.asset_id
+        service_description = "Qualification",
+        service_date = date(day = 5, month = 8,year = 2022),
+        asset_id = asset5.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type10)
+    db.session.add(service_job10)
 
-    # create the asset object
-    asset_type11 = AssetType(
+    # create the asset_type object
+    service_job11 = ServiceJob(
         # set the attributes
-        description = "HPLC",
-        asset_id = asset11.asset_id
+        service_description = "PM",
+        service_date = date(day = 21, month = 8,year = 2021),
+        asset_id = asset5.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type11)
+    db.session.add(service_job11)
 
-    # create the asset object
-    asset_type12 = AssetType(
+    # create the asset_type object
+    service_job12 = ServiceJob(
         # set the attributes
-        description = "HPLC",
-        asset_id = asset12.asset_id
+        service_description = "Repair",
+        service_date = date(day = 1, month = 5,year = 2022),
+        asset_id = asset6.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type12)
+    db.session.add(service_job12)
 
-    # create the asset object
-    asset_type13 = AssetType(
+    # create the asset_type object
+    service_job13 = ServiceJob(
         # set the attributes
-        description = "FTIR",
-        asset_id = asset13.asset_id
+        service_description = "Qualification",
+        service_date = date(day = 1, month = 1,year = 2023),
+        asset_id = asset6.asset_id 
     )
     # Add the object as a new row to the table
-    db.session.add(asset_type13)
+    db.session.add(service_job13)
+
+    # create the asset_type object
+    service_job14 = ServiceJob(
+        # set the attributes
+        service_description = "PM",
+        service_date = date(day = 1, month = 4,year = 2022),
+        asset_id = asset6.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job14)
+
+    # create the asset_type object
+    service_job15 = ServiceJob(
+        # set the attributes
+        service_description = "Qualification",
+        service_date = date(day = 11, month = 9,year = 2021),
+        asset_id = asset7.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job15)
+
+    # create the asset_type object
+    service_job16 = ServiceJob(
+        # set the attributes
+        service_description = "PM",
+        service_date = date(day = 1, month = 4,year = 2022),
+        asset_id = asset7.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job16)
+
+    # create the asset_type object
+    service_job17 = ServiceJob(
+        # set the attributes
+        service_description = "PM",
+        service_date = date(day = 1, month = 4,year = 2021),
+        asset_id = asset8.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job17)
+
+    # create the asset_type object
+    service_job18 = ServiceJob(
+        # set the attributes
+        service_description = "PM",
+        service_date = date(day = 1, month = 3,year = 2023),
+        asset_id = asset8.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job18)
+
+    # create the asset_type object
+    service_job19 = ServiceJob(
+        # set the attributes
+        service_description = "Qualification",
+        service_date = date(day = 1, month = 5,year = 2021),
+        asset_id = asset9.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job19)
+
+    # create the asset_type object
+    service_job20 = ServiceJob(
+        # set the attributes
+        service_description = "Qualification",
+        service_date = date(day = 1, month = 3,year = 2020),
+        asset_id = asset9.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job20)
+
+    # create the asset_type object
+    service_job21 = ServiceJob(
+        # set the attributes
+        service_description = "PM",
+        service_date = date(day = 12, month = 9,year = 2022),
+        asset_id = asset9.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job21)
+
+     # create the asset_type object
+    service_job22 = ServiceJob(
+        # set the attributes
+        service_description = "Repair",
+        service_date = date(day = 12, month = 1,year = 2023),
+        asset_id = asset10.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job22)
+
+     # create the asset_type object
+    service_job23 = ServiceJob(
+        # set the attributes
+        service_description = "Repair",
+        service_date = date(day = 12, month = 11,year = 2022),
+        asset_id = asset10.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job23)
+
+     # create the asset_type object
+    service_job24 = ServiceJob(
+        # set the attributes
+        service_description = "PM",
+        service_date = date(day = 5, month = 10,year = 2021),
+        asset_id = asset10.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job24)
+
+      # create the asset_type object
+    service_job25 = ServiceJob(
+        # set the attributes
+        service_description = "PM",
+        service_date = date(day = 8, month = 12,year = 2022),
+        asset_id = asset11.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job25)
+
+     # create the asset_type object
+    service_job26 = ServiceJob(
+        # set the attributes
+        service_description = "PM",
+        service_date = date(day = 6, month = 7,year = 2021),
+        asset_id = asset11.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job26)
+
+     # create the asset_type object
+    service_job27 = ServiceJob(
+        # set the attributes
+        service_description = "Qualification",
+        service_date = date(day = 8, month = 1,year = 2022),
+        asset_id = asset12.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job27)
+
+     # create the asset_type object
+    service_job28 = ServiceJob(
+        # set the attributes
+        service_description = "Qualification",
+        service_date = date(day = 18, month = 10,year = 2021),
+        asset_id = asset12.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job28)
+
+      # create the asset_type object
+    service_job29 = ServiceJob(
+        # set the attributes
+        service_description = "PM",
+        service_date = date(day = 18, month = 10,year = 2023),
+        asset_id = asset12.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job29)
+
+      # create the asset_type object
+    service_job30 = ServiceJob(
+        # set the attributes
+        service_description = "PM",
+        service_date = date(day = 8, month = 1,year = 2022),
+        asset_id = asset13.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job30)
+
+      # create the asset_type object
+    service_job31 = ServiceJob(
+        # set the attributes
+        service_description = "Qualification",
+        service_date = date(day = 8, month = 1,year = 2023),
+        asset_id = asset13.asset_id 
+    )
+    # Add the object as a new row to the table
+    db.session.add(service_job31)
+
 
     # This extra commit will end the transaction and generate the ids for the asset_types
     db.session.commit()
@@ -420,7 +615,7 @@ def seed_db():
         manufacturer_contact_number = "111",
         manufacturer_email = "thermo@email.com",
         manufacturer_address = "1 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type1.asset_type_id
+        asset_id = asset1.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer1)
@@ -432,7 +627,7 @@ def seed_db():
         manufacturer_contact_number = "22222",
         manufacturer_email = "agilent@email.com",
         manufacturer_address = "2 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type2.asset_type_id
+        asset_id = asset2.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer2)
@@ -444,7 +639,7 @@ def seed_db():
         manufacturer_contact_number = "22222",
         manufacturer_email = "agilent@email.com",
         manufacturer_address = "2 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type3.asset_type_id
+        asset_id = asset3.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer3)
@@ -456,7 +651,7 @@ def seed_db():
         manufacturer_contact_number = "111",
         manufacturer_email = "thermo@email.com",
         manufacturer_address = "1 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type4.asset_type_id
+        asset_id = asset4.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer4)
@@ -468,7 +663,7 @@ def seed_db():
         manufacturer_contact_number = "111",
         manufacturer_email = "thermo@email.com",
         manufacturer_address = "1 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type5.asset_type_id
+        asset_id = asset5.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer5)
@@ -480,7 +675,7 @@ def seed_db():
         manufacturer_contact_number = "55555",
         manufacturer_email = "bruker@email.com",
         manufacturer_address = "5 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type6.asset_type_id
+        asset_id = asset6.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer6)
@@ -492,7 +687,7 @@ def seed_db():
         manufacturer_contact_number = "33333",
         manufacturer_email = "shimadzu@email.com",
         manufacturer_address = "3 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type7.asset_type_id
+        asset_id = asset7.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer7)
@@ -504,7 +699,7 @@ def seed_db():
         manufacturer_contact_number = "111",
         manufacturer_email = "thermo@email.com",
         manufacturer_address = "1 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type8.asset_type_id
+        asset_id = asset8.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer8)
@@ -516,7 +711,7 @@ def seed_db():
         manufacturer_contact_number = "44444",
         manufacturer_email = "pe@email.com",
         manufacturer_address = "4 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type9.asset_type_id
+        asset_id = asset9.asset_id 
     )
      # Add the object as a new row to the table
     db.session.add(manfacturer9)
@@ -528,7 +723,7 @@ def seed_db():
         manufacturer_contact_number = "22222",
         manufacturer_email = "agilent@email.com",
         manufacturer_address = "2 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type10.asset_type_id
+        asset_id = asset10.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer10)
@@ -540,7 +735,7 @@ def seed_db():
         manufacturer_contact_number = "55555",
         manufacturer_email = "bruker@email.com",
         manufacturer_address = "5 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type11.asset_type_id
+        asset_id = asset11.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer11)
@@ -552,7 +747,7 @@ def seed_db():
         manufacturer_contact_number = "33333",
         manufacturer_email = "shimadzu@email.com",
         manufacturer_address = "3 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type12.asset_type_id
+        asset_id = asset12.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer12)
@@ -564,7 +759,7 @@ def seed_db():
         manufacturer_contact_number = "111",
         manufacturer_email = "thermo@email.com",
         manufacturer_address = "1 Tree Road, Sydney, NSW",
-        asset_type_id = asset_type13.asset_type_id
+        asset_id = asset13.asset_id 
     )
     # Add the object as a new row to the table
     db.session.add(manfacturer13)

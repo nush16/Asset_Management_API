@@ -11,4 +11,4 @@ class Manufacturer(db.Model):
     manufacturer_email = db.Column(db.String(), nullable=False)
     manufacturer_address = db.Column(db.String())
     # link to asset_type
-    asset_type_id = db.Column(db.Integer, db.ForeignKey("asset_type.asset_type_id"), nullable =False)
+    asset_id = db.Column(db.Integer, db.ForeignKey("assets.asset_id"), nullable =False)
