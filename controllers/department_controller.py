@@ -28,7 +28,7 @@ def get_departments():
     # return jsonify(result)
     return jsonify(result)
 
-# The GET routes endpoint - get details on one employee
+# The GET routes endpoint - get details on one department
 @departments.route("/<int:id>/", methods=["GET"])
 def get_department(id):
     department = Department.query.get(id)
@@ -59,7 +59,6 @@ def employee_assets (department_id):
 @jwt_required()
 def create_department():
     department_fields = department_schema.load(request.json)
-    data = request.get_json()
 
     try:
         #Create a new department
