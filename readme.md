@@ -103,11 +103,6 @@ A ORM (Object Realtional Mapping)
 * Authentication method - any USER
 * Expected Response: 
 
-### View all manufacturers assets a department has
-'GET' - 
-
-RESPONSE:
-
 ### View all service history for the asset
 'GET' - ```@assets.route('/service_job/<int:asset_id>', methods=["GET"])```
 * Example - http://127.0.0.1:5000/departments/assets/1
@@ -210,7 +205,7 @@ RESPONSE:
 
 
 
-
+****
 ### Update department
 'PUT' - ```@departments.route("/<int:id>/", methods=["PUT"])```
 * Example - http://127.0.0.1:5000/departments/1

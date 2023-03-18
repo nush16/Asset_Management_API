@@ -4,6 +4,7 @@ from models.manufacturer import Manufacturer
 from models.users import User
 from schemas.manufacturer_schema import manufacturer_schema, manufacturers_schema
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from sqlalchemy.exc import DataError, IntegrityError
 from marshmallow import ValidationError
 from werkzeug.exceptions import BadRequest
 from datetime import date
@@ -49,10 +50,10 @@ def create_manufacturers():
     user = User.query.get(user_id)
     #Make sure it is in the database
     if not user:
-        return abort(401, description="Invalid user")
+        return jsonify({'error': 'Invalid user'}),401
     # Stop the request if the user is not an admin
     if not user.admin:
-        return abort(401, description="Unauthorised user")
+        return jsonify({'error': 'Unauthorised user'}),401
     try:
         #add a new manufacturer
         manufacturer_fields = manufacturer_schema.load(request.json)
@@ -72,7 +73,9 @@ def create_manufacturers():
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
-    except Exception as e:
+    except DataError as e:
+        return jsonify({'error': 'Please check that correct type of data has been entered'}), 500
+    except IntegrityError as e:
         # Handle all other exceptions
         return jsonify({'error': 'New manufacturer could not be added, please check details again'}), 500
 
@@ -88,10 +91,10 @@ def update_manufacturer(id):
     user = User.query.get(user_id)
     # Make sure it is in the database
     if not user:
-        return abort(401, description="Invalid user")
+        return jsonify({'error': 'Invalid user'}),401
     # Stop the request if the user is not an admin
     if not user.admin:
-        return abort(401, description="Unauthorised user")
+        return jsonify({'error': 'Unauthorised user'}),401
     # find the manufacturer
     manufacturer = Manufacturer.query.filter_by(manufacturer_id=id).first()
     #return an error if the manufacturer doesn't exist
@@ -113,9 +116,11 @@ def update_manufacturer(id):
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
-    except Exception as e:
+    except DataError as e:
+        return jsonify({'error': 'Please check that correct type of data has been entered'}), 500
+    except IntegrityError as e:
         # Handle all other exceptions
-        return jsonify({'error': 'Manufacturer details cannot be updated, please check details'}), 500
+        return jsonify({'error': 'New manufacturer could not be added, please check details again'}), 500
 
 
 # The DELETE route endpoint - delete a manufacturer
@@ -128,10 +133,10 @@ def delete_asset(id):
     user = User.query.get(user_id)
     #Make sure it is in the database
     if not user:
-        return abort(401, description="Invalid user")
+        return jsonify({'error': 'Invalid user'}),401
     # Stop the request if the user is not an admin
     if not user.admin:
-        return abort(401, description="Unauthorised user")
+        return jsonify({'error': 'Unauthorised user'}),401
     # find the manufacturer
     manufacturer = Manufacturer.query.filter_by(manufacturer_id=id).first()
     #return an error if the manufacturer doesn't exist

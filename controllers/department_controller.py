@@ -4,6 +4,7 @@ from models.departments import Department
 from models.users import User
 from werkzeug.exceptions import BadRequest
 from marshmallow import ValidationError
+from sqlalchemy.exc import DataError, IntegrityError
 from schemas.department_schema import department_schema, departments_schema
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -78,7 +79,9 @@ def create_department():
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
-    except Exception as e:
+    except DataError as e:
+        return jsonify({'error': 'Please check that correct type of data has been entered'}), 500
+    except IntegrityError as e:
         # Handle all other exceptions
         return jsonify({'error': 'New department could not be added, please check details again'}), 500
         
@@ -94,10 +97,10 @@ def update_department(id):
     user = User.query.get(user_id)
     # #Make sure it is in the database
     if not user:
-        return abort(401, description="Invalid user")
-    # # Stop the request if the user is not an admin
+        return jsonify({'error': 'Invalid user'}),401
+    # Stop the request if the user is not an admin
     if not user.admin:
-        return abort(401, description="Unauthorised user")
+        return jsonify({'error': 'Unauthorised user'}),401
     # find the department
     department = Department.query.filter_by(department_id=id).first()
     #return an error if the department doesn't exist
@@ -117,9 +120,11 @@ def update_department(id):
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
-    except Exception as e:
+    except DataError as e:
+        return jsonify({'error': 'Please check that correct type of data has been entered'}), 500
+    except IntegrityError as e:
         # Handle all other exceptions
-        return jsonify({'error': 'Department details cannot be updated, please check details'}), 500
+        return jsonify({'error': 'New department could not be added, please check details again'}), 500
 
 
 # The DELETE route endpoint - delete a department
@@ -132,10 +137,10 @@ def delete_department(id):
     user = User.query.get(user_id)
     #Make sure it is in the database
     if not user:
-        return abort(401, description="Invalid user")
+        return jsonify({'error': 'Invalid user'}),401
     # Stop the request if the user is not an admin
     if not user.admin:
-        return abort(401, description="Unauthorised user")
+        return jsonify({'error': 'Unauthorised user'}),401
     # find the department
     department = Department.query.filter_by(department_id=id).first()
     #return an error if the department doesn't exist

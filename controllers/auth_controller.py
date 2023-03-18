@@ -22,7 +22,6 @@ def auth_register():
     user_fields = user_schema.load(request.json)
     # find the user
     user = User.query.filter_by(email=user_fields["email"]).first()
-
     if user:
         # return an abort message to inform the user. That will end the request
         return abort(400, description="Email already registered")

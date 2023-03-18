@@ -3,12 +3,14 @@ from main import db
 from models.employees import Employee
 from models.users import User
 from marshmallow import ValidationError
+from sqlalchemy.exc import IntegrityError, DataError
 from werkzeug.exceptions import BadRequest
 from schemas.employee_schema import employee_schema, employees_schema
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 employees = Blueprint('employees', __name__, url_prefix="/employees")
+
 
 # error handler for validation error in marshmallow
 @employees.errorhandler(ValidationError)
@@ -93,10 +95,10 @@ def create_employees():
     user = User.query.get(user_id)
     #Make sure it is in the database
     if not user:
-        return abort(401, description="Invalid user")
+        return jsonify({'error': 'Invalid user'}),401
     # Stop the request if the user is not an admin
     if not user.admin:
-        return abort(401, description="Unauthorised user")
+        return jsonify({'error': 'Unauthorised user'}),401
     try: 
         #Create a new employee
         employee_fields = employee_schema.load(request.json)
@@ -118,9 +120,11 @@ def create_employees():
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
-    except Exception as e:
-        # Handle all other exceptions
+        # handle duplication of email adress and contact number
+    except IntegrityError as e:
         return jsonify({'error': 'New employee could not be added, please check details again'}), 500
+    except DataError as e:
+        return jsonify({'error': 'Please check that correct type of data has been entered'}), 500
 
 # The PUT route endpoint - update employee details
 @employees.route("/<int:id>/", methods=["PUT"])
@@ -134,15 +138,15 @@ def update_employee(id):
     user = User.query.get(user_id)
     #Make sure it is in the database
     if not user:
-        return abort(401, description="Invalid user")
+        return jsonify({'error': 'Invalid user'}),401
     # Stop the request if the user is not an admin
     if not user.admin:
-        return abort(401, description="Unauthorised user")
+        return jsonify({'error': 'Unauthorised user'}),401
     # find the employee
     employee = Employee.query.filter_by(employee_id=id).first()
     #return an error if the employee doesn't exist
     if not employee:
-        return abort(400, description= "Employee does not exist")
+        return jsonify({'error': 'Employee does not exist'}),400
     # update the employee details with the given values
     try:
         employee.first_name = employee_fields["first_name"]
@@ -161,9 +165,10 @@ def update_employee(id):
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
-    except Exception as e:
-        # Handle all other exceptions
-        return jsonify({'error': 'Employee details cannot be updated, please check details'}), 500
+    except IntegrityError as e:
+        return jsonify({'error': 'New employee could not be added, please check details again'}), 500
+    except DataError as e:
+        return jsonify({'error': 'Please check that correct type of data has been entered'}), 500
 
 
 # The DELETE route endpoint - delete an employee
@@ -176,15 +181,15 @@ def delete_employee(id):
     user = User.query.get(user_id)
     #Make sure it is in the database
     if not user:
-        return abort(401, description="Invalid user")
+        return jsonify({'error': 'Invalid user'}),401
     # Stop the request if the user is not an admin
     if not user.admin:
-        return abort(401, description="Unauthorised user")
+        return jsonify({'error': 'Unauthorised user'}),401
     # find the employee
     employee = Employee.query.filter_by(employee_id=id).first()
     #return an error if the employee doesn't exist
     if not employee:
-        return jsonify({'error': 'Employee does not exist'}), 400
+        return jsonify({'error': 'Employee does not exist'}),400
     #Delete the employee from the database and commit
     db.session.delete(employee)
     db.session.commit()

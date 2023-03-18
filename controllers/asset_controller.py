@@ -4,6 +4,7 @@ from models.assets import Asset
 from models.users import User
 from schemas.asset_schema import asset_schema, assets_schema
 from werkzeug.exceptions import BadRequest
+from sqlalchemy.exc import DataError, IntegrityError
 from marshmallow import ValidationError
 from datetime import date
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -88,10 +89,10 @@ def create_asset():
     user = User.query.get(user_id)
     #Make sure it is in the database
     if not user:
-        return abort(403, description="Invalid user")
+        return jsonify({'error': 'Invalid user'}),401
     # Stop the request if the user is not an admin
     if not user.admin:
-        return abort(401, description="Unauthorised user")
+        return jsonify({'error': 'Unauthorised user'}),401
     try:
         #Create a new asset
         asset_fields = asset_schema.load(request.json)
@@ -110,7 +111,9 @@ def create_asset():
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
-    except Exception as e:
+    except DataError as e:
+        return jsonify({'error': 'Please check that correct type of data has been entered'}), 500
+    except IntegrityError as e:
         # Handle all other exceptions
         return jsonify({'error': 'New asset could not be added, please check details again'}), 500
 
@@ -126,15 +129,15 @@ def update_asset(id):
     user = User.query.get(user_id)
     #Make sure it is in the database
     if not user:
-        return abort(401, description="Invalid user")
+        return jsonify({'error': 'Invalid user'}),401
     # Stop the request if the user is not an admin
     if not user.admin:
-        return abort(401, description="Unauthorised user")
+        return jsonify({'error': 'Unauthorised user'}),401
     # find the asset
     asset = Asset.query.filter_by(asset_id=id).first()
     #return an error if the asset doesn't exist
     if not asset:
-        return abort(400, description= "Asset does not exist")
+        return jsonify({'error': 'Asset does not exist'}),400
     # update the asset details with the given values
     try:
         asset.asset_name = asset_fields["asset_name"]
@@ -151,9 +154,11 @@ def update_asset(id):
     except BadRequest as e:
         # Handle the case where the request data is invalid
         return jsonify({'error': str(e)}), 400
-    except Exception as e:
+    except DataError as e:
+        return jsonify({'error': 'Please check that correct type of data has been entered'}), 500
+    except IntegrityError as e:
         # Handle all other exceptions
-        return jsonify({'error': 'Asset details cannot be updated, please check details again'}), 500
+        return jsonify({'error': 'New asset could not be added, please check details again'}), 500
 
 
 # The DELETE route endpoint - delete a asset
@@ -174,7 +179,7 @@ def delete_asset(id):
     asset = Asset.query.filter_by(asset_id=id).first()
     #return an error if the asset doesn't exist
     if not asset:
-        return abort(400, description= "Asset doesn't exist")
+        return jsonify({'error': 'Asset does not exist'}),400
     #Delete the asset from the database and commit
     db.session.delete(asset)
     db.session.commit()
